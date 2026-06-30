@@ -884,22 +884,32 @@ default-timeout=0
 
 
 def emit_hyprland(p):
-    # Groupbar (tabbed window stacks) borrows the theme's selection vocabulary:
-    # the active tab is the selection wash (hl_med, as CursorLine/Visual use),
-    # inactive tabs recede to overlay. One text_color serves both: in either
-    # variant both fills sit on the same side of the luminance midpoint, so the
-    # ink/paper pole `on()` picks clears the contrast floor on both (verified
-    # >9:1 each way).
-    gb_text = on(p["hl_med"])
+    # Groupbar (tabbed window stacks): the active tab carries the brand accent so
+    # focus is unmistakable; inactive tabs recede to the overlay tone showing only
+    # dim titles. We use the *floored* primary (not the raw brand hex) for the fill
+    # on purpose: floor() guarantees it clears 4.5:1 against the bg, so the active
+    # tab has crisp edges in both variants (raw #f76707 only manages ~2.4:1 on the
+    # cream bg and blurs into it). Per variant this resolves to the computed-correct
+    # pairing — light: burnt orange + paper text; dark: bright orange + ink text —
+    # each the legible pole on() picks for that fill. Note: in Hyprland's groupbar,
+    # col.active colours BOTH the tab body and the bottom indicator from one value,
+    # so they cannot differ; the tab reads as a single solid chip.
+    gb_active_text   = on(p["primary"])   # paper/ink pole, legible on the orange tab
+    # `dim` is floored against the bg, but the inactive title sits on the *overlay*
+    # fill (lighter than bg in dark), where bg-floored dim drops to ~3.9:1. Re-floor
+    # against the overlay so the recessed title still clears 4.5:1 on its own surface.
+    gb_inactive_text = floor(p["dim"], p["overlay"], 4.5)
     write(f"hypr/hyprland-colors-figuya-{p['variant']}.conf",
           f"# figuya ({p['variant']}) — generated. Minimal hairline borders;\n"
           f"# focus is shown by window opacity, so both states share a quiet tone.\n"
           f"$activeBorder   = rgba({p['hl_med']}ff)\n"
           f"$inactiveBorder = rgba({p['hl_med']}99)\n"
-          f"# Groupbar (tabbed stacks): selection wash vs recessed, ink/paper text.\n"
-          f"$groupActive    = rgba({p['hl_med']}ff)\n"
-          f"$groupInactive  = rgba({p['overlay']}ff)\n"
-          f"$groupText      = rgba({gb_text}ff)\n")
+          f"# Groupbar (tabbed stacks): brand-accent active tab, recessed inactive.\n"
+          f"# Consume in group:groupbar — col.active/inactive + text_color[_inactive].\n"
+          f"$groupActive       = rgba({p['primary']}ff)\n"
+          f"$groupInactive     = rgba({p['overlay']}ff)\n"
+          f"$groupText         = rgba({gb_active_text}ff)\n"
+          f"$groupTextInactive = rgba({gb_inactive_text}ff)\n")
 
 
 def emit_hyprlock(p):

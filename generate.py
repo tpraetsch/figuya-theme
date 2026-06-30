@@ -884,11 +884,22 @@ default-timeout=0
 
 
 def emit_hyprland(p):
+    # Groupbar (tabbed window stacks) borrows the theme's selection vocabulary:
+    # the active tab is the selection wash (hl_med, as CursorLine/Visual use),
+    # inactive tabs recede to overlay. One text_color serves both: in either
+    # variant both fills sit on the same side of the luminance midpoint, so the
+    # ink/paper pole `on()` picks clears the contrast floor on both (verified
+    # >9:1 each way).
+    gb_text = on(p["hl_med"])
     write(f"hypr/hyprland-colors-figuya-{p['variant']}.conf",
           f"# figuya ({p['variant']}) — generated. Minimal hairline borders;\n"
           f"# focus is shown by window opacity, so both states share a quiet tone.\n"
           f"$activeBorder   = rgba({p['hl_med']}ff)\n"
-          f"$inactiveBorder = rgba({p['hl_med']}99)\n")
+          f"$inactiveBorder = rgba({p['hl_med']}99)\n"
+          f"# Groupbar (tabbed stacks): selection wash vs recessed, ink/paper text.\n"
+          f"$groupActive    = rgba({p['hl_med']}ff)\n"
+          f"$groupInactive  = rgba({p['overlay']}ff)\n"
+          f"$groupText      = rgba({gb_text}ff)\n")
 
 
 def emit_hyprlock(p):

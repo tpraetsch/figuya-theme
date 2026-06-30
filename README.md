@@ -156,7 +156,21 @@ your existing configs, so light/dark can be swapped by a switcher (e.g. darkman)
   (Adwaita colour override), or install the named theme in `dist/gtk/themes/figuya/`.
 - **mako** — symlink `dist/mako/config-figuya-<v>` to `~/.config/mako/config`.
 - **Hyprland** — `source` `hyprland-colors-figuya-<v>.conf` (provides
-  `$activeBorder/$inactiveBorder`); hyprlock uses `hyprlock-colors-figuya-<v>.conf`.
+  `$activeBorder/$inactiveBorder`).
+- **hyprlock** — a full lock-screen *layout* ships at `dist/hypr/hyprlock.conf`
+  (copy to `~/.config/hypr/`): minimal top-left clock cluster, a brand-accent
+  hairline, and a pill input field. It `source`s the swapped
+  `hyprlock-colors-figuya-<v>.conf` and reads a swapped `wallpaper.png`. The two
+  firewatch wallpapers are third-party art, so figuya fetches rather than
+  bundles them — `sh dist/hypr/fetch-wallpapers.sh` drops `wallpaper-{dark,light}.png`
+  into `~/.local/share/figuya/hypr/` (`install.sh` does this for you). Wire the
+  night/day swap in your darkman hooks next to the colour symlink:
+  ```sh
+  # dark-mode.d hook
+  ln -sf ~/.local/share/figuya/hypr/wallpaper-dark.png  ~/.config/hypr/wallpaper.png
+  # light-mode.d hook
+  ln -sf ~/.local/share/figuya/hypr/wallpaper-light.png ~/.config/hypr/wallpaper.png
+  ```
 - **fuzzel** — point `fuzzel.ini` at `dist/fuzzel/figuya-<v>.ini`.
 - **fish prompt** — `source dist/fish/figuya-theme.fish` for `forte_<mode>_<role>` globals.
 

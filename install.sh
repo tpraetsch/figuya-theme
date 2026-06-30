@@ -42,6 +42,21 @@ cp -f "$DIST/ghostty/figuya-light"     "$CFG/ghostty/themes/figuya-light"
 cp -f "$DIST/bat/figuya-dark.tmTheme"  "$CFG/bat/themes/figuya-dark.tmTheme"
 cp -f "$DIST/bat/figuya-light.tmTheme" "$CFG/bat/themes/figuya-light.tmTheme"
 
+# 2b. hyprlock: full lock-screen layout (variant-agnostic — it sources the
+# swapped colours + wallpaper). Unlike the colour fragments this IS the primary
+# hyprlock.conf, so back up an existing hand-written one once before replacing.
+mkdir -p "$CFG/hypr"
+if [ -e "$CFG/hypr/hyprlock.conf" ] && [ ! -e "$CFG/hypr/hyprlock.conf.pre-figuya" ] \
+   && ! grep -q "figuya — generated" "$CFG/hypr/hyprlock.conf" 2>/dev/null; then
+    cp "$CFG/hypr/hyprlock.conf" "$CFG/hypr/hyprlock.conf.pre-figuya"
+fi
+cp -f "$DIST/hypr/hyprlock.conf" "$CFG/hypr/hyprlock.conf"
+# Lock wallpapers are third-party art (not bundled): fetch into the share dir,
+# where the darkman hooks symlink wallpaper.png → wallpaper-<mode>.png. Needs
+# network; best-effort so an offline install still places everything else.
+sh "$DIST/hypr/fetch-wallpapers.sh" "$SHARE/hypr" \
+    || echo "  warn: wallpaper fetch failed (offline?) — rerun dist/hypr/fetch-wallpapers.sh later"
+
 # 3. Named GTK3 theme.
 mkdir -p "$THEMES/figuya/gtk-3.0"
 cp -fr "$DIST/gtk/themes/figuya/." "$THEMES/figuya/"
@@ -55,3 +70,4 @@ echo "figuya installed:"
 echo "  share:  $SHARE"
 echo "  themes: $THEMES/figuya"
 echo "  direct: nvim/colors, fish/conf.d, foot/colors-figuya.ini, ghostty/themes, bat/themes"
+echo "  hypr:   hyprlock.conf installed; wallpapers in $SHARE/hypr (wire the darkman swap — see README)"

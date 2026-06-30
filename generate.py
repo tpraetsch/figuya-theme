@@ -925,6 +925,157 @@ def emit_hyprlock(p):
           f"$failHex   = ##{p['error']}\n")
 
 
+# The lock-screen *layout* — variant-agnostic, so it's emitted once (not per
+# `p`). It `source`s the darkman-swapped hyprlock-colors symlink for its $vars
+# and reads the swapped wallpaper.png, so a single file serves both variants.
+# Ships the whole screen (typography, the brand-accent hairline, the pill input
+# field), not just colours. The wallpapers it expects are third-party art and
+# are NOT bundled — fetch-wallpapers.sh pulls them. See README → hyprlock.
+_HYPRLOCK_CONF = r"""# hyprlock — figuya lock screen (moon-night / sunrise-day, follows darkman)
+# https://wiki.hyprland.org/Hypr-Ecosystem/hyprlock/
+#
+# Minimal & refined: weight-contrast typography (Thin clock / Medium date),
+# a single brand-accent hairline as the only ornament, and a pill input field.
+# Colours come from a darkman-swapped symlink, read fresh at each lock.
+# The widget cluster sits TOP-LEFT — the one zone that's dark in the night
+# wallpaper (legible light text) and bright sky in the day one (legible dark
+# text); both backgrounds are darkman-swapped 5120x2880 firewatch landscapes.
+
+source = ~/.config/hypr/hyprlock-colors.conf
+
+general {
+    hide_cursor = true
+    grace = 2                 # seconds after wake where a keypress unlocks without typing
+    ignore_empty_input = true
+}
+
+# Wallpaper (darkman-swapped firewatch landscape): flat painterly art, so
+# only a whisper of blur — heavy blur would muddy the clean colour fields.
+# Brightness stays near full; the night variant is already dark enough to
+# carry light text, and the day variant needs its bright sky intact.
+background {
+    monitor =
+    path = ~/.config/hypr/wallpaper.png
+    blur_passes = 1
+    blur_size = 2
+    noise = 0.008
+    contrast = 1.0
+    brightness = 0.92
+    vibrancy = 0.1
+    vibrancy_darkness = 0.2
+}
+
+# Clock — oversized, Thin weight, soft shadow for depth and legibility.
+label {
+    monitor =
+    text = cmd[update:1000] echo "$(date '+%H:%M')"
+    color = $text
+    font_size = 100
+    font_family = JetBrainsMono NF Thin
+    position = 200, 200
+    halign = left
+    valign = top
+    shadow_passes = 3
+    shadow_size = 5
+    shadow_color = rgba(0, 0, 0, 0.45)
+    shadow_boost = 1.2
+}
+
+# Brand-accent hairline — the single signature detail tying the lock
+# screen to figuya. A short bar tucked between clock and date in the
+# top-left cluster (kept clear of the wallpaper's focal subject).
+shape {
+    monitor =
+    size = 60, 3
+    color = $accent
+    rounding = 2
+    position = 230, 345
+    halign = left
+    valign = top
+}
+
+# Date — Medium weight, recessed colour, uppercased for an editorial feel.
+label {
+    monitor =
+    text = cmd[update:60000] echo "$(date '+%A · %d %B' | tr '[:lower:]' '[:upper:]')"
+    color = $subtle
+    font_size = 17
+    font_family = JetBrainsMono NF Medium
+    position = 205, 380
+    halign = left
+    valign = top
+    shadow_passes = 2
+    shadow_size = 3
+    shadow_color = rgba(0, 0, 0, 0.35)
+}
+
+# Input field — refined pill: accent ring, surface fill, round dots.
+input-field {
+    monitor =
+    size = 300, 50
+    position = 200, 450
+    halign = left
+    valign = top
+
+    outline_thickness = 2
+    rounding = 24
+    dots_size = 0.26
+    dots_spacing = 0.32
+    dots_center = true
+    dots_rounding = -1
+
+    outer_color = $accent
+    inner_color = $inner
+    font_color  = $text
+    check_color = $check          # verifying
+    fail_color  = $fail           # wrong password
+
+    font_family = JetBrainsMono NF Medium
+    placeholder_text = <span foreground="$subtleHex">󰌾  Locked</span>
+    fail_text = <span foreground="$failHex">󰗮  $FAIL  ·  $ATTEMPTS</span>
+    fade_on_empty = true
+    fade_timeout = 1500
+}
+"""
+
+
+# Lock wallpapers are third-party art (NOT figuya's to redistribute under MIT),
+# so we ship a fetcher rather than the images. install.sh runs it into the
+# figuya share dir; darkman symlinks wallpaper.png → wallpaper-<mode>.png there.
+# Saved with a .png name though the bytes are JPEG — hyprlock sniffs content.
+_FETCH_WALLPAPERS_SH = r"""#!/bin/sh
+# figuya — fetch the hyprlock wallpapers (third-party art, not bundled).
+# Pulls the two firewatch-style backgrounds the figuya lock layout expects.
+#
+#   sh fetch-wallpapers.sh [TARGET_DIR]
+#
+# Default TARGET_DIR: ${XDG_DATA_HOME:-$HOME/.local/share}/figuya/hypr
+# Source images (© their authors; not covered by figuya's MIT licence):
+#   dark  / moon-night   https://wallhaven.cc/w/mdjrqy
+#   light / sunrise-day  https://wallhaven.cc/w/9mq26d
+set -eu
+DEST="${1:-${XDG_DATA_HOME:-$HOME/.local/share}/figuya/hypr}"
+mkdir -p "$DEST"
+fetch() {  # <wallhaven-id> <outfile>
+    sub=$(printf %s "$1" | cut -c1-2)
+    url="https://w.wallhaven.cc/full/$sub/wallhaven-$1.jpg"
+    echo "  $2  <-  $url"
+    curl -fsSL "$url" -o "$DEST/$2"
+}
+fetch mdjrqy wallpaper-dark.png
+fetch 9mq26d wallpaper-light.png
+echo "figuya: lock wallpapers in $DEST"
+"""
+
+
+def emit_hyprlock_conf():
+    write("hypr/hyprlock.conf", "# " + GEN + "\n" + _HYPRLOCK_CONF)
+
+
+def emit_hyprlock_wallpapers():
+    write("hypr/fetch-wallpapers.sh", _FETCH_WALLPAPERS_SH)
+
+
 def _gtk_status(p):
     # Status colours share names across GTK3 and libadwaita.
     return (f"@define-color warning_color #{p['warning']};\n"
@@ -1088,6 +1239,8 @@ def main():
     emit_fish(pd, pl)
     emit_gtk_named_theme(pd, pl)
     emit_foot_combined(pd, pl)
+    emit_hyprlock_conf()          # lock-screen layout (variant-agnostic)
+    emit_hyprlock_wallpapers()    # fetcher for the (unbundled) lock wallpapers
     for p in (pd, pl):
         # terminals
         emit_alacritty(p)

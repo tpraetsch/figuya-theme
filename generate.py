@@ -810,10 +810,13 @@ terminal=foot -e
 layer=overlay
 width=35
 lines=12
-horizontal-pad=14
-vertical-pad=12
+# The selection bar is always full-width (border to border); horizontal-pad
+# insets the row *text* within it. So padding the items and a full-width
+# selection are not in conflict — keep a comfortable text inset here.
+horizontal-pad=16
+vertical-pad=10
 inner-pad=8
-line-height=26
+line-height=28
 match-mode=fuzzy
 
 [border]
@@ -823,7 +826,13 @@ radius=12
 
 
 def emit_fuzzel(p):
-    s = _slot(p)
+    # The selected row's text is base-100 (the bg), so the selection fill must
+    # clear the contrast floor against it: prefer the vivid brand orange, and fall
+    # back to the contrast-floored orange where raw is too light (e.g. cream text
+    # on the light bg, where vivid orange would only reach ~2.8:1).
+    sel = p["primary_raw"]
+    if contrast(_hx(p["bg"]), _hx(sel)) < 4.5:
+        sel = p["primary"]
     colors = f"""
 [colors]
 background={p['bg']}ff
@@ -832,9 +841,9 @@ prompt={p['dim']}ff
 placeholder={p['dim']}ff
 input={p['text']}ff
 match={p['error']}ff
-selection={p['primary_raw']}ff
-selection-text={on(p['primary_raw'])}ff
-selection-match={on(p['primary_raw'])}ff
+selection={sel}ff
+selection-text={p['bg']}ff
+selection-match={p['bg']}ff
 counter={p['dim']}ff
 border={p['text']}ff
 """

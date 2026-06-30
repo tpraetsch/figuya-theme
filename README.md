@@ -9,6 +9,26 @@ every colour's contrast against the background it actually sits on, to a WCAG
 floor (accents ≥ 4.5:1, body text ≥ 7:1), holding the hue and moving only
 lightness. "High contrast" is a property the theme *computes*, in both variants.
 
+## Quickstart
+
+```sh
+git clone https://github.com/tpraetsch/figuya-theme && cd figuya-theme
+
+python3 generate.py --preview   # build dist/ + see both variants as ANSI swatches
+sh install.sh                   # regenerate + install onto this machine
+```
+
+Then point an app at its variant — `dist/<app>/figuya-<dark|light>.*` — using the
+per-app snippets in [Install](#install). Want to recolor everything? Edit one hue
+in [`palette.toml`](palette.toml) and re-run `generate.py`; every port updates.
+
+- **Just want the files?** Grab them straight from [`dist/`](dist/) — they're
+  committed; no build step needed to consume them.
+- **Want them placed for you?** `sh install.sh` copies them into `~/.config` and
+  `~/.local/share` for a darkman-style light/dark switcher (see
+  [`install.sh`](install.sh) for exact paths).
+- **Only the standard library** (Python 3.11+) is required to regenerate.
+
 ## Palette
 
 | Role | Anchor | Light bg `#fff6e9` | Dark bg `#251d1b` |

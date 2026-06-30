@@ -200,18 +200,31 @@ return {{
     write(f"wezterm/figuya-{p['variant']}.lua", body)
 
 
-def emit_foot(p):
+def _foot_section(p, name):
     a = _ansi16(p)
-    lines = [f"# {GEN}", "[colors]",
-             f"background={p['bg']}", f"foreground={p['text']}",
-             f"selection-background={p['hl_med']}",
-             f"selection-foreground={p['text']}",
-             f"cursor={p['bg']} {p['primary_raw']}", ""]
-    for i in range(8):
-        lines.append(f"regular{i}={a[i]}")
-    for i in range(8):
-        lines.append(f"bright{i}={a[8 + i]}")
-    write(f"foot/figuya-{p['variant']}.ini", "\n".join(lines) + "\n")
+    out = [f"[{name}]",
+           f"background={p['bg']}", f"foreground={p['text']}",
+           f"selection-background={p['hl_med']}",
+           f"selection-foreground={p['text']}",
+           f"cursor={p['bg']} {p['primary_raw']}"]
+    out += [f"regular{i}={a[i]}" for i in range(8)]
+    out += [f"bright{i}={a[8 + i]}" for i in range(8)]
+    return "\n".join(out)
+
+
+def emit_foot(p):
+    write(f"foot/figuya-{p['variant']}.ini",
+          f"# {GEN}\n" + _foot_section(p, "colors") + "\n")
+
+
+def emit_foot_combined(pd, pl):
+    # Both variants in one file; foot picks the section matching the desktop
+    # color-scheme automatically — no switcher needed for foot's palette.
+    write("foot/figuya.ini",
+          f"# {GEN}\n# foot auto-selects the section matching the desktop "
+          "color-scheme.\n\n"
+          + _foot_section(pd, "colors-dark") + "\n\n"
+          + _foot_section(pl, "colors-light") + "\n")
 
 
 def emit_ghostty(p):
@@ -1038,6 +1051,7 @@ def main():
     # desktop / rice (cross-variant)
     emit_fish(pd, pl)
     emit_gtk_named_theme(pd, pl)
+    emit_foot_combined(pd, pl)
     for p in (pd, pl):
         # terminals
         emit_alacritty(p)

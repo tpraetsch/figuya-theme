@@ -32,6 +32,7 @@ Everything lands under [`dist/`](dist/), with a light and dark variant unless no
 **Editors** — [Neovim](dist/nvim/) · [Helix](dist/helix/) · [VS Code](dist/vscode/)
 **Terminals** — [Alacritty](dist/alacritty/) · [Kitty](dist/kitty/) · [WezTerm](dist/wezterm/) · [foot](dist/foot/) · [Ghostty](dist/ghostty/)
 **CLI** — [bat](dist/bat/) · [delta](dist/delta/) · [fzf](dist/fzf/) · [tmux](dist/tmux/) · [zellij](dist/zellij/)
+**Desktop (Wayland)** — [Waybar + wofi](dist/waybar/) · [GTK 3/4](dist/gtk/) · [mako](dist/mako/) · [Hyprland + hyprlock](dist/hypr/) · [fuzzel](dist/fuzzel/) · [fish prompt](dist/fish/)
 
 ## Install
 
@@ -123,6 +124,21 @@ cp dist/zellij/figuya.kdl ~/.config/zellij/themes/
 ```kdl
 theme "figuya-dark"
 ```
+
+### Desktop (Wayland)
+
+These are colour fragments meant to be `@import`ed / `include`d / symlinked from
+your existing configs, so light/dark can be swapped by a switcher (e.g. darkman):
+
+- **Waybar / wofi** — point your `style.css` at the variant via an `@import`ed
+  `colors.css` symlink; it defines `@base/@surface/@text/@accent/@error/@warn/…`.
+- **GTK** — symlink `dist/gtk/gtk{3,4}-figuya-<v>.css` to `~/.config/gtk-{3,4}.0/gtk.css`
+  (Adwaita colour override), or install the named theme in `dist/gtk/themes/figuya/`.
+- **mako** — symlink `dist/mako/config-figuya-<v>` to `~/.config/mako/config`.
+- **Hyprland** — `source` `hyprland-colors-figuya-<v>.conf` (provides
+  `$activeBorder/$inactiveBorder`); hyprlock uses `hyprlock-colors-figuya-<v>.conf`.
+- **fuzzel** — point `fuzzel.ini` at `dist/fuzzel/figuya-<v>.ini`.
+- **fish prompt** — `source dist/fish/figuya-theme.fish` for `forte_<mode>_<role>` globals.
 
 ## Regenerating / customizing
 

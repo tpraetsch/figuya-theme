@@ -1,0 +1,4 @@
+/* figuya — generated wrapper theme: Adwaita base + figuya colours.
+   Edit palette.toml + rerun generate.py, not this. */
+@import url("resource:///org/gtk/libgtk/theme/Adwaita/gtk-contained-dark.css");
+@import url("colors-dark.css");

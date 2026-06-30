@@ -1,0 +1,16 @@
+/* figuya (dark) — generated; shared by waybar + wofi. */
+@define-color base    #251d1b;
+@define-color surface #2e2422;
+@define-color overlay #3b2f31;
+@define-color hl_med  #50403d;
+@define-color muted   #a1887f;
+@define-color subtle  #a1887f;
+@define-color text    #f5ece0;
+@define-color accent  #f76707;
+@define-color error   #f14747;
+@define-color warn    #f59f00;
+@define-color caution #dd5685;
+@define-color link    #3089da;
+@define-color info    #906ef4;
+@define-color binding #f76707;
+@define-color window_bg rgba(37, 29, 27, 0.92);

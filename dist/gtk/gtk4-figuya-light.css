@@ -1,0 +1,50 @@
+/* figuya (light) — GTK4/libadwaita colour override.
+   Generated; do not hand-edit. Symlink to gtk-4.0/gtk.css. */
+/* status colours (shared name-set with GTK3) */
+@define-color warning_color #9e6600;
+@define-color error_color #d33636;
+@define-color success_color #278238;
+
+/* libadwaita named colours */
+@define-color window_bg_color #fff6e9;
+@define-color window_fg_color #2d2220;
+@define-color view_bg_color #fffaf3;
+@define-color view_fg_color #2d2220;
+@define-color headerbar_bg_color #f6ead8;
+@define-color headerbar_fg_color #2d2220;
+@define-color headerbar_backdrop_color #fff6e9;
+@define-color sidebar_bg_color #f6ead8;
+@define-color sidebar_fg_color #2d2220;
+@define-color secondary_sidebar_bg_color #f6ead8;
+@define-color card_bg_color #fffaf3;
+@define-color card_fg_color #2d2220;
+@define-color dialog_bg_color #fffaf3;
+@define-color dialog_fg_color #2d2220;
+@define-color popover_bg_color #fffaf3;
+@define-color popover_fg_color #2d2220;
+@define-color accent_bg_color f76707;
+@define-color accent_fg_color #2d2220;
+@define-color accent_color f76707;
+@define-color destructive_bg_color #d33636;
+@define-color destructive_fg_color #2d2220;
+@define-color destructive_color #d33636;
+@define-color warning_bg_color #9e6600;
+@define-color error_bg_color #d33636;
+@define-color success_bg_color #278238;
+@define-color success_fg_color #2d2220;
+@define-color warning_fg_color #2d2220;
+@define-color error_fg_color #2d2220;
+
+@define-color shade_color alpha(#2d2220, 0.07);
+@define-color scrollbar_outline_color alpha(#fff6e9, 0.5);
+@define-color headerbar_border_color #e8ddca;
+@define-color headerbar_shade_color alpha(#2d2220, 0.07);
+@define-color card_shade_color alpha(#2d2220, 0.07);
+@define-color popover_shade_color alpha(#2d2220, 0.07);
+@define-color thumbnail_bg_color #fffaf3;
+@define-color thumbnail_fg_color #2d2220;
+@define-color sidebar_backdrop_color #fff6e9;
+@define-color sidebar_shade_color alpha(#2d2220, 0.07);
+@define-color sidebar_border_color #e8ddca;
+@define-color secondary_sidebar_backdrop_color #fff6e9;
+@define-color secondary_sidebar_border_color #e8ddca;

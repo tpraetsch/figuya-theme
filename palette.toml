@@ -1,0 +1,68 @@
+# figuya — a warm, high-contrast theme built on Figuya's brand palette.
+#
+# Single source of truth for every port. The brand hues below are NEVER
+# hand-tuned for contrast: generate.py re-derives each colour's contrast against
+# the active background to a WCAG floor, holding the hue and moving only
+# lightness. "High contrast" is therefore computed, not a set of magic hexes.
+#
+#   python3 generate.py            # writes dist/<port>/...
+#   python3 generate.py --preview  # + ANSI swatch of both variants
+#
+# Colours originate in the Figuya design system (DESIGN.json → colorMeta), whose
+# ramps are Open Color / Mantine. Edit a hue here and it propagates to every port.
+
+[meta]
+name = "figuya"
+description = "Warm, high-contrast theme from the Figuya brand palette"
+
+# ── Brand accents ────────────────────────────────────────────────────────────
+# Figuya's semantic roles, keyed by purpose (not by hue). Ports reference these
+# names, so a hue can be re-pointed here without touching any emitter. Anchor
+# hexes are the canonical mid-tone of each Mantine ramp; generate.py floors them
+# per variant (light = darken toward black, dark = lift toward white).
+[brand]
+primary   = "f76707"   # Figuya Orange      — the brand accent
+secondary = "7950f2"   # Convention Violet
+tertiary  = "d6336c"   # Marker Magenta
+info      = "1c7ed6"   # Backorder Blue
+success   = "2f9e44"   # Stocked Green
+warning   = "f59f00"   # Caution Amber
+error     = "f03e3e"   # Sale Error Red
+
+# WCAG contrast floors (foreground vs the variant background).
+[floors]
+accent = 4.5   # AA for normal text — applied to every brand accent
+text   = 7.0   # AAA — primary body/UI text
+dim    = 4.5   # secondary text (comments, line numbers, placeholders)
+
+# ── Structural tones ─────────────────────────────────────────────────────────
+# Backgrounds/surfaces are used as-is; text/dim are floored by the generator.
+# Light = Newsprint Cream family, dark = Inked Cocoa family (both warm-neutral,
+# hue ~30–75, so the palette reads warm end to end).
+[variant.light]
+bg      = "fff6e9"   # newsprint cream
+surface = "fffaf3"   # lifted (popovers, cards, the brighter "paper")
+overlay = "f6ead8"   # recessed cream (inactive chips, gutters)
+hl_med  = "e8ddca"   # selection / current-line wash (warm sand)
+text    = "2d2220"   # ink            -> floored to 7:1
+dim     = "5c4d4a"   # warm stone     -> floored to 4.5:1
+
+[variant.dark]
+bg      = "251d1b"   # inked cocoa
+surface = "2e2422"   # lifted
+overlay = "3b2f31"   # recessed
+hl_med  = "50403d"   # selection / current-line wash
+text    = "f5ece0"   # cream          -> floored to 7:1
+dim     = "a1887f"   # warm taupe     -> floored to 4.5:1
+
+# ── Terminal ANSI 16 ─────────────────────────────────────────────────────────
+# The 6 ANSI hues map onto brand roles where they line up. Figuya has no cyan,
+# so the cyan slot uses Mantine Teal 6 (#0ca678) — same palette family, keeps the
+# 16-colour table complete and coherent. black/white derive from structural tones.
+[ansi]
+red     = "error"      # brand role reference
+green   = "success"
+yellow  = "warning"
+blue    = "info"
+magenta = "tertiary"
+cyan    = "0ca678"     # Mantine Teal 6 — figuya has no cyan; completes ANSI

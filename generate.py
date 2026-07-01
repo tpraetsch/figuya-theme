@@ -771,6 +771,7 @@ def _slot(p):
         "accent": p["primary"], "accent_raw": p["primary_raw"],
         "error": p["error"], "warn": p["warning"], "caution": p["tertiary"],
         "link": p["info"], "info": p["secondary"], "mute": p["dim"],
+        "success": p["success"],
     }
 
 
@@ -1209,7 +1210,7 @@ def emit_fish(pd, pl):
     for p in (pd, pl):
         s = _slot(p)
         v = p["variant"]
-        for role in ("accent", "error", "warn", "caution", "link", "info"):
+        for role in ("accent", "error", "warn", "caution", "link", "info", "success"):
             lines.append(f"set -g forte_{v}_{role} {s[role]}")
         lines.append(f"set -g forte_{v}_mute {p['dim']}")
         lines.append("")

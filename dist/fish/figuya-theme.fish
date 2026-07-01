@@ -7,6 +7,7 @@ set -g forte_dark_warn f59f00
 set -g forte_dark_caution e27098
 set -g forte_dark_link 4c9adf
 set -g forte_dark_info 9f82f6
+set -g forte_dark_success 45a857
 set -g forte_dark_mute ad9890
 
 set -g forte_light_accent a94605
@@ -15,4 +16,5 @@ set -g forte_light_warn 8b5a00
 set -g forte_light_caution b82c5d
 set -g forte_light_link 1766ae
 set -g forte_light_info 6c48d8
+set -g forte_light_success 227331
 set -g forte_light_mute 5c4d4a

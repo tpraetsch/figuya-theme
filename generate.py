@@ -761,11 +761,11 @@ def emit_zellij(pd, pl):
 
 
 # ── Desktop / rice ports ──────────────────────────────────────────────────────
-# The legacy waybar/wofi/fish/fuzzel surfaces speak a 6-slot accent vocabulary
-# (accent/error/warn/caution/link/info). Figuya's brand hues fill those slots,
-# one distinct hue each, so existing stylesheets keep working unchanged:
-#   accent=primary  error=error  warn=warning  caution=tertiary
-#   link=info(blue)  info=secondary(violet)
+# The fish prompt palette (emit_fish) keeps a legacy 6-slot accent vocabulary
+# (accent/error/warn/caution/link/info) for drop-in compatibility with
+# fish_right_prompt.fish. Figuya's brand hues fill those slots, one distinct hue
+# each:  accent=primary  error=error  warn=warning  caution=tertiary
+#        link=info(blue)  info=secondary(violet)
 def _slot(p):
     return {
         "accent": p["primary"], "accent_raw": p["primary_raw"],
@@ -775,28 +775,34 @@ def _slot(p):
 
 
 def emit_waybar_css(p):
-    # Shared @define-color set @import-ed by both waybar/style.css and
-    # wofi/style.css (via their colors.css symlink). Names match what those
-    # stylesheets reference; do not rename without updating them.
-    s = _slot(p)
+    # Shared @define-color set @import-ed by waybar/style.css, wofi/style.css and
+    # waypaper/style.css (via their colors.css symlink). Names are figuya's own
+    # palette roles — structural (bg/surface/overlay/hl_med/dim/text) + brand
+    # (primary/secondary/tertiary/info/success/warning/error) — so a token maps
+    # 1:1 to palette.toml. Do not rename without updating those stylesheets.
+    #   @primary      contrast-floored orange — safe for text/edges in both modes
+    #   @primary_raw  RAW brand orange (#f76707) — for large brand fills (the
+    #                 active-workspace chip); vivid, identical in both variants
+    #   @on_primary   the legible ink/paper pole for text on @primary_raw
     r, g, b = _hx(p["bg"])
     alpha = "0.98" if p["variant"] == "light" else "0.92"
-    body = f"""/* figuya ({p['variant']}) — generated; shared by waybar + wofi. */
-@define-color base    #{p['bg']};
-@define-color surface #{p['surface']};
-@define-color overlay #{p['overlay']};
-@define-color hl_med  #{p['hl_med']};
-@define-color muted   #{p['dim']};
-@define-color subtle  #{p['dim']};
-@define-color text    #{p['text']};
-@define-color accent  #{s['accent']};
-@define-color error   #{s['error']};
-@define-color warn    #{s['warn']};
-@define-color caution #{s['caution']};
-@define-color link    #{s['link']};
-@define-color info    #{s['info']};
-@define-color binding #{s['accent']};
-@define-color window_bg rgba({r}, {g}, {b}, {alpha});
+    body = f"""/* figuya ({p['variant']}) — generated; shared by waybar + wofi + waypaper. */
+@define-color bg          #{p['bg']};
+@define-color surface     #{p['surface']};
+@define-color overlay     #{p['overlay']};
+@define-color hl_med      #{p['hl_med']};
+@define-color dim         #{p['dim']};
+@define-color text        #{p['text']};
+@define-color primary     #{p['primary']};
+@define-color primary_raw #{p['primary_raw']};
+@define-color on_primary  #{on(p['primary_raw'])};
+@define-color secondary   #{p['secondary']};
+@define-color tertiary    #{p['tertiary']};
+@define-color info        #{p['info']};
+@define-color success     #{p['success']};
+@define-color warning     #{p['warning']};
+@define-color error       #{p['error']};
+@define-color window_bg   rgba({r}, {g}, {b}, {alpha});
 """
     write(f"waybar/figuya-{p['variant']}.css", body)
 
@@ -884,17 +890,16 @@ default-timeout=0
 
 
 def emit_hyprland(p):
-    # Groupbar (tabbed window stacks): the active tab carries the brand accent so
-    # focus is unmistakable; inactive tabs recede to the overlay tone showing only
-    # dim titles. We use the *floored* primary (not the raw brand hex) for the fill
-    # on purpose: floor() guarantees it clears 4.5:1 against the bg, so the active
-    # tab has crisp edges in both variants (raw #f76707 only manages ~2.4:1 on the
-    # cream bg and blurs into it). Per variant this resolves to the computed-correct
-    # pairing — light: burnt orange + paper text; dark: bright orange + ink text —
-    # each the legible pole on() picks for that fill. Note: in Hyprland's groupbar,
-    # col.active colours BOTH the tab body and the bottom indicator from one value,
-    # so they cannot differ; the tab reads as a single solid chip.
-    gb_active_text   = on(p["primary"])   # paper/ink pole, legible on the orange tab
+    # Groupbar (tabbed window stacks): the active tab carries the RAW figuya brand
+    # orange (#f76707) so focus reads as the brand colour itself, not a contrast-
+    # darkened derivative; inactive tabs recede to the overlay tone with dim titles.
+    # Text is ink in both variants (on() picks the dark pole on orange), which stays
+    # legible on the fill. Trade-off: on the light cream bg the raw orange only clears
+    # ~2.4:1 as a fill, so the tab edge is softer than the floored orange was — the
+    # $activeBorder hairline + ink title keep it readable. Note: in Hyprland's
+    # groupbar, col.active colours BOTH the tab body and the bottom indicator from one
+    # value, so they cannot differ; the tab reads as a single solid brand chip.
+    gb_active_text   = on(p["primary_raw"])   # ink pole, legible on the brand orange
     # `dim` is floored against the bg, but the inactive title sits on the *overlay*
     # fill (lighter than bg in dark), where bg-floored dim drops to ~3.9:1. Re-floor
     # against the overlay so the recessed title still clears 4.5:1 on its own surface.
@@ -906,7 +911,7 @@ def emit_hyprland(p):
           f"$inactiveBorder = rgba({p['hl_med']}99)\n"
           f"# Groupbar (tabbed stacks): brand-accent active tab, recessed inactive.\n"
           f"# Consume in group:groupbar — col.active/inactive + text_color[_inactive].\n"
-          f"$groupActive       = rgba({p['primary']}ff)\n"
+          f"$groupActive       = rgba({p['primary_raw']}ff)\n"
           f"$groupInactive     = rgba({p['overlay']}ff)\n"
           f"$groupText         = rgba({gb_active_text}ff)\n"
           f"$groupTextInactive = rgba({gb_inactive_text}ff)\n")

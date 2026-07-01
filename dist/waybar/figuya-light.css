@@ -1,16 +1,17 @@
-/* figuya (light) — generated; shared by waybar + wofi. */
-@define-color base    #fff6e9;
-@define-color surface #fffaf3;
-@define-color overlay #f6ead8;
-@define-color hl_med  #e8ddca;
-@define-color muted   #5c4d4a;
-@define-color subtle  #5c4d4a;
-@define-color text    #2d2220;
-@define-color accent  #a94605;
-@define-color error   #ba3030;
-@define-color warn    #8b5a00;
-@define-color caution #b82c5d;
-@define-color link    #1766ae;
-@define-color info    #6c48d8;
-@define-color binding #a94605;
-@define-color window_bg rgba(255, 246, 233, 0.98);
+/* figuya (light) — generated; shared by waybar + wofi + waypaper. */
+@define-color bg          #fff6e9;
+@define-color surface     #fffaf3;
+@define-color overlay     #f6ead8;
+@define-color hl_med      #e8ddca;
+@define-color dim         #5c4d4a;
+@define-color text        #2d2220;
+@define-color primary     #a94605;
+@define-color primary_raw #f76707;
+@define-color on_primary  #2d2220;
+@define-color secondary   #6c48d8;
+@define-color tertiary    #b82c5d;
+@define-color info        #1766ae;
+@define-color success     #227331;
+@define-color warning     #8b5a00;
+@define-color error       #ba3030;
+@define-color window_bg   rgba(255, 246, 233, 0.98);

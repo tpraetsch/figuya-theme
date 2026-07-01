@@ -899,7 +899,7 @@ def emit_hyprland(p):
     # $activeBorder hairline + ink title keep it readable. Note: in Hyprland's
     # groupbar, col.active colours BOTH the tab body and the bottom indicator from one
     # value, so they cannot differ; the tab reads as a single solid brand chip.
-    gb_active_text   = on(p["primary_raw"])   # ink pole, legible on the brand orange
+    gb_active_text   = "ffffff"   # white — parity with the waybar active-workspace label
     # `dim` is floored against the bg, but the inactive title sits on the *overlay*
     # fill (lighter than bg in dark), where bg-floored dim drops to ~3.9:1. Re-floor
     # against the overlay so the recessed title still clears 4.5:1 on its own surface.

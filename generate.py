@@ -1033,7 +1033,7 @@ input-field {
     font_family = JetBrainsMono NF Medium
     placeholder_text = <span foreground="$subtleHex">󰌾  Locked</span>
     fail_text = <span foreground="$failHex">󰗮  $FAIL  ·  $ATTEMPTS</span>
-    fade_on_empty = true
+    fade_on_empty = false
     fade_timeout = 1500
 }
 """

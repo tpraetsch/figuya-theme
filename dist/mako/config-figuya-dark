@@ -13,8 +13,8 @@ border-color=#f76707
 progress-color=over #50403d
 
 [urgency=low]
-border-color=#a1887f
+border-color=#ad9890
 
 [urgency=high]
-border-color=#f14747
+border-color=#f36868
 default-timeout=0

@@ -19,6 +19,6 @@
 @define-color unfocused_borders #f6ead8;
 
 /* status colours (shared name-set with libadwaita) */
-@define-color warning_color #9e6600;
-@define-color error_color #d33636;
-@define-color success_color #278238;
+@define-color warning_color #8b5a00;
+@define-color error_color #ba3030;
+@define-color success_color #227331;

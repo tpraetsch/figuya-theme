@@ -8,6 +8,6 @@ return {
   cursor_border = "#f76707",
   selection_bg = "#50403d",
   selection_fg = "#f5ece0",
-  ansi = { "#3b2f31", "#f14747", "#2f9e44", "#f59f00", "#3089da", "#dd5685", "#0ca678", "#cbbab0" },
-  brights = { "#a1887f", "#f14747", "#2f9e44", "#f59f00", "#3089da", "#dd5685", "#0ca678", "#f5ece0" },
+  ansi = { "#3b2f31", "#f36868", "#45a857", "#f59f00", "#4c9adf", "#e27098", "#13a97c", "#d1c2b8" },
+  brights = { "#ad9890", "#f36868", "#45a857", "#f59f00", "#4c9adf", "#e27098", "#13a97c", "#f5ece0" },
 }

@@ -7,7 +7,7 @@
 @define-color theme_selected_bg_color #f76707;
 @define-color theme_selected_fg_color #2d2220;
 @define-color insensitive_bg_color #3b2f31;
-@define-color insensitive_fg_color #a1887f;
+@define-color insensitive_fg_color #ad9890;
 @define-color insensitive_base_color #251d1b;
 @define-color theme_unfocused_bg_color #251d1b;
 @define-color theme_unfocused_fg_color #f5ece0;
@@ -20,5 +20,5 @@
 
 /* status colours (shared name-set with libadwaita) */
 @define-color warning_color #f59f00;
-@define-color error_color #f14747;
-@define-color success_color #2f9e44;
+@define-color error_color #f36868;
+@define-color success_color #45a857;

@@ -31,9 +31,9 @@ error     = "f03e3e"   # Sale Error Red
 
 # WCAG contrast floors (foreground vs the variant background).
 [floors]
-accent = 4.5   # AA for normal text — applied to every brand accent
-text   = 7.0   # AAA — primary body/UI text
-dim    = 4.5   # secondary text (comments, line numbers, placeholders)
+accent = 5.5   # above AA — brand accents pushed harder off the bg (was 4.5)
+text   = 7.0   # AAA — primary body/UI text (raw ink/cream already ~14:1)
+dim    = 6.0   # secondary text; lifts dark-mode comments/line numbers (was 4.5)
 
 # ── Structural tones ─────────────────────────────────────────────────────────
 # Backgrounds/surfaces are used as-is; text/dim are floored by the generator.

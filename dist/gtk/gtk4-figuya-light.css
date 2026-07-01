@@ -1,9 +1,9 @@
 /* figuya (light) — GTK4/libadwaita colour override.
    Generated; do not hand-edit. Symlink to gtk-4.0/gtk.css. */
 /* status colours (shared name-set with GTK3) */
-@define-color warning_color #9e6600;
-@define-color error_color #d33636;
-@define-color success_color #278238;
+@define-color warning_color #8b5a00;
+@define-color error_color #ba3030;
+@define-color success_color #227331;
 
 /* libadwaita named colours */
 @define-color window_bg_color #fff6e9;
@@ -25,12 +25,12 @@
 @define-color accent_bg_color #f76707;
 @define-color accent_fg_color #2d2220;
 @define-color accent_color #f76707;
-@define-color destructive_bg_color #d33636;
+@define-color destructive_bg_color #ba3030;
 @define-color destructive_fg_color #2d2220;
-@define-color destructive_color #d33636;
-@define-color warning_bg_color #9e6600;
-@define-color error_bg_color #d33636;
-@define-color success_bg_color #278238;
+@define-color destructive_color #ba3030;
+@define-color warning_bg_color #8b5a00;
+@define-color error_bg_color #ba3030;
+@define-color success_bg_color #227331;
 @define-color success_fg_color #2d2220;
 @define-color warning_fg_color #2d2220;
 @define-color error_fg_color #2d2220;

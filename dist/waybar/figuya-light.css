@@ -6,11 +6,11 @@
 @define-color muted   #5c4d4a;
 @define-color subtle  #5c4d4a;
 @define-color text    #2d2220;
-@define-color accent  #bf4f05;
-@define-color error   #d33636;
-@define-color warn    #9e6600;
-@define-color caution #d03269;
-@define-color link    #1a74c6;
-@define-color info    #7950f2;
-@define-color binding #bf4f05;
+@define-color accent  #a94605;
+@define-color error   #ba3030;
+@define-color warn    #8b5a00;
+@define-color caution #b82c5d;
+@define-color link    #1766ae;
+@define-color info    #6c48d8;
+@define-color binding #a94605;
 @define-color window_bg rgba(255, 246, 233, 0.98);

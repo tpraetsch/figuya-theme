@@ -16,5 +16,5 @@ progress-color=over #e8ddca
 border-color=#5c4d4a
 
 [urgency=high]
-border-color=#d33636
+border-color=#ba3030
 default-timeout=0

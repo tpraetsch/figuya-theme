@@ -2,8 +2,8 @@
    Generated; do not hand-edit. Symlink to gtk-4.0/gtk.css. */
 /* status colours (shared name-set with GTK3) */
 @define-color warning_color #f59f00;
-@define-color error_color #f14747;
-@define-color success_color #2f9e44;
+@define-color error_color #f36868;
+@define-color success_color #45a857;
 
 /* libadwaita named colours */
 @define-color window_bg_color #251d1b;
@@ -25,12 +25,12 @@
 @define-color accent_bg_color #f76707;
 @define-color accent_fg_color #2d2220;
 @define-color accent_color #f76707;
-@define-color destructive_bg_color #f14747;
+@define-color destructive_bg_color #f36868;
 @define-color destructive_fg_color #2d2220;
-@define-color destructive_color #f14747;
+@define-color destructive_color #f36868;
 @define-color warning_bg_color #f59f00;
-@define-color error_bg_color #f14747;
-@define-color success_bg_color #2f9e44;
+@define-color error_bg_color #f36868;
+@define-color success_bg_color #45a857;
 @define-color success_fg_color #2d2220;
 @define-color warning_fg_color #2d2220;
 @define-color error_fg_color #2d2220;

@@ -22,9 +22,9 @@
 @define-color dialog_fg_color #f5ece0;
 @define-color popover_bg_color #2e2422;
 @define-color popover_fg_color #f5ece0;
-@define-color accent_bg_color f76707;
+@define-color accent_bg_color #f76707;
 @define-color accent_fg_color #2d2220;
-@define-color accent_color f76707;
+@define-color accent_color #f76707;
 @define-color destructive_bg_color #f14747;
 @define-color destructive_fg_color #2d2220;
 @define-color destructive_color #f14747;

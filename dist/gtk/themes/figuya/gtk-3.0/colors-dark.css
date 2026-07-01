@@ -4,7 +4,7 @@
 @define-color theme_fg_color #f5ece0;
 @define-color theme_base_color #2e2422;
 @define-color theme_text_color #f5ece0;
-@define-color theme_selected_bg_color f76707;
+@define-color theme_selected_bg_color #f76707;
 @define-color theme_selected_fg_color #2d2220;
 @define-color insensitive_bg_color #3b2f31;
 @define-color insensitive_fg_color #a1887f;
@@ -13,7 +13,7 @@
 @define-color theme_unfocused_fg_color #f5ece0;
 @define-color theme_unfocused_base_color #2e2422;
 @define-color theme_unfocused_text_color #f5ece0;
-@define-color theme_unfocused_selected_bg_color f76707;
+@define-color theme_unfocused_selected_bg_color #f76707;
 @define-color theme_unfocused_selected_fg_color #2d2220;
 @define-color borders #50403d;
 @define-color unfocused_borders #3b2f31;

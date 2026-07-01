@@ -1092,7 +1092,7 @@ def _gtk3_css(p):
 @define-color theme_fg_color #{p['text']};
 @define-color theme_base_color #{p['surface']};
 @define-color theme_text_color #{p['text']};
-@define-color theme_selected_bg_color {accent};
+@define-color theme_selected_bg_color #{accent};
 @define-color theme_selected_fg_color {on_accent};
 @define-color insensitive_bg_color #{p['overlay']};
 @define-color insensitive_fg_color #{p['dim']};
@@ -1101,7 +1101,7 @@ def _gtk3_css(p):
 @define-color theme_unfocused_fg_color #{p['text']};
 @define-color theme_unfocused_base_color #{p['surface']};
 @define-color theme_unfocused_text_color #{p['text']};
-@define-color theme_unfocused_selected_bg_color {accent};
+@define-color theme_unfocused_selected_bg_color #{accent};
 @define-color theme_unfocused_selected_fg_color {on_accent};
 @define-color borders #{p['hl_med']};
 @define-color unfocused_borders #{p['overlay']};
@@ -1139,9 +1139,9 @@ def emit_gtk4(p):
 @define-color dialog_fg_color #{p['text']};
 @define-color popover_bg_color #{p['surface']};
 @define-color popover_fg_color #{p['text']};
-@define-color accent_bg_color {accent};
+@define-color accent_bg_color #{accent};
 @define-color accent_fg_color {on_accent};
-@define-color accent_color {accent};
+@define-color accent_color #{accent};
 @define-color destructive_bg_color #{p['error']};
 @define-color destructive_fg_color {on_accent};
 @define-color destructive_color #{p['error']};
